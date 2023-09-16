@@ -1,0 +1,47 @@
+# Archivos de sistema y caches
+__pycache__/
+*.pyc
+
+# Entorno virtual
+venv/
+.env/
+
+# Archivos de configuración locales
+*.pyc
+.DS_Store
+
+# Carpeta donde se instalan las dependencias (por ejemplo, con pip)
+lib/
+
+# Archivo de registro
+*.log
+
+# Carpeta de archivos generados
+dist/
+build/
+
+# Archivo de configuración de PyInstaller
+.spec
+
+# Carpeta de archivos de caché generados por pytest
+.cache/
+
+# Carpeta de archivos generados por el linter (por ejemplo, flake8)
+.flake8
+
+# Carpeta de archivos generados por coverage
+.coverage
+htmlcov/
+
+# Archivo de configuración de mypy
+.mypy_cache/
+
+# Carpeta de archivos generados por bandit
+.bndt
+
+# Carpeta de archivos generados por vulture
+.vulture_cache/
+
+
+# archivo .env
+.env
