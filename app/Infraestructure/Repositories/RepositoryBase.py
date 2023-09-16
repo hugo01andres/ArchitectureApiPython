@@ -1,5 +1,7 @@
+from app.Infraestructure.db import db
+
 class RepositorioBase:
-    def __init__(self, db):
+    def __init__(self):
         self.db = db
 
     def agregar(self, entidad):
@@ -18,3 +20,4 @@ class RepositorioBase:
     def eliminar(self, entidad):
         self.db.session.delete(entidad)
         self.db.session.commit()
+

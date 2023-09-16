@@ -1,4 +1,5 @@
-class Usuario:
-    def __init__(self, id, nombre):
-        self.id = id
-        self.nombre = nombre
+from app.Infraestructure.db import db
+
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)

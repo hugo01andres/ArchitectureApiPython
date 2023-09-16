@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.Services.UsuarioService import UsuarioService
-from app.Infraestructure.db import db
 
 usuario_bp = Blueprint('usuario_bp', __name__)
-usuario_service = UsuarioService(db)  # Asegúrate de tener acceso a la instancia de la base de datos (db).
+usuario_service = UsuarioService()
 
 @usuario_bp.route('/usuarios', methods=['GET'])
 def obtener_todos_los_usuarios():
@@ -20,10 +19,13 @@ def obtener_usuario_por_id(id):
 @usuario_bp.route('/usuarios', methods=['POST'])
 def crear_usuario():
     datos = request.get_json()
-    id = datos.get('id')
     nombre = datos.get('nombre')
-    nuevo_usuario = usuario_service.crear_usuario(id, nombre)
-    return jsonify(nuevo_usuario.__dict__), 201
+    nuevo_usuario = usuario_service.crear_usuario(nombre)
+    response_data = {
+        'id': nuevo_usuario.id,
+        'nombre': nuevo_usuario.nombre
+    }
+    return jsonify(response_data), 201
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['PUT'])
 def actualizar_usuario(id):
@@ -40,3 +42,4 @@ def eliminar_usuario(id):
         return jsonify({'mensaje': 'Usuario no encontrado'}), 404
     usuario_service.eliminar_usuario(usuario)
     return jsonify({'mensaje': 'Usuario eliminado exitosamente'}), 200
+
