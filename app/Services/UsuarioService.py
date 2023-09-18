@@ -1,11 +1,14 @@
 from app.Infraestructure.Repositories.UsuarioRepository import UsuarioRepository
+from app.Core.Models.Usuario import Usuario
 
 class UsuarioService:
     def __init__(self):
         self.usuario_repository = UsuarioRepository()
 
     def crear_usuario(self, nombre):
-        nuevo_usuario = self.usuario_repository.agregar(nombre=nombre)
+        nuevo_usuario = Usuario(nombre=nombre)
+        self.usuario_repository.agregar(nuevo_usuario)
+        print(nuevo_usuario)
         return nuevo_usuario
 
     def obtener_todos_los_usuarios(self):

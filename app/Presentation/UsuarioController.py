@@ -6,11 +6,12 @@ usuario_service = UsuarioService()
 
 @usuario_bp.route('/usuarios', methods=['POST'])
 def crear_usuario():
+    """Crear un usuario"""
     print(request.get_json())
     data = request.get_json()
     nombre = data.get('nombre')
     nuevo_usuario = usuario_service.crear_usuario(nombre)
-    return jsonify(nuevo_usuario.__dict__), 201
+    return nuevo_usuario, 201
 
 @usuario_bp.route('/usuarios', methods=['GET'])
 def obtener_todos_los_usuarios():
