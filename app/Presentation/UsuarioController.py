@@ -49,9 +49,29 @@ def obtener_todos_los_usuarios():
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['GET'])
 def obtener_usuario_por_id(id):
+    """Obtiene un usuario por su ID.
+
+    Obtiene la información del usuario con el ID proporcionado.
+
+    ---
+    parameters:
+      - name: id
+        in: path
+        description: ID del usuario a obtener.
+        required: true
+        type: integer
+    responses:
+      200:
+        description: Información del usuario.
+      404:
+        description: Usuario no encontrado.
+    """
     usuario = usuario_service.obtener_usuario_por_id(id)
     if usuario is not None:
-        return jsonify(usuario.__dict__), 200
+        return jsonify({
+            'id': usuario.id,
+            'nombre': usuario.nombre
+        }), 200
     return jsonify({'mensaje': 'Usuario no encontrado'}), 404
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['PUT'])
@@ -65,6 +85,23 @@ def actualizar_usuario(id):
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['DELETE'])
 def eliminar_usuario(id):
+    """Elimina un usuario.
+
+    Elimina el usuario con el ID proporcionado.
+
+    ---
+    parameters:
+      - name: id
+        in: path
+        description: ID del usuario a eliminar.
+        required: true
+        type: integer
+    responses:
+      200:
+        description: Usuario eliminado correctamente.
+      404:
+        description: Usuario no encontrado.
+    """
     eliminado = usuario_service.eliminar_usuario(id)
     if eliminado:
         return jsonify({'mensaje': 'Usuario eliminado correctamente'}), 200
