@@ -11,7 +11,7 @@ def crear_usuario():
     data = request.get_json()
     nombre = data.get('nombre')
     nuevo_usuario = usuario_service.crear_usuario(nombre)
-    return nuevo_usuario, 201
+    return 'Usuario creado',201
 
 @usuario_bp.route('/usuarios', methods=['GET'])
 def obtener_todos_los_usuarios():
