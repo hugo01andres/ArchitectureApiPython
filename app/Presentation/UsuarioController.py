@@ -6,7 +6,28 @@ usuario_service = UsuarioService()
 
 @usuario_bp.route('/usuarios', methods=['POST'])
 def crear_usuario():
-    """Crear un usuario"""
+    """Crea un usuario.
+
+    Crea un nuevo usuario con el nombre proporcionado.
+
+    ---
+    consumes:
+      - application/json
+    parameters:
+      - name: nombre
+        in: body
+        required: true
+        description: Nombre del usuario a crear.
+        schema:
+          type: object
+          properties:
+            nombre:
+              type: string
+              example: ""
+    responses:
+      201:
+        description: Usuario creado exitosamente.
+    """
     print(request.get_json())
     data = request.get_json()
     nombre = data.get('nombre')
