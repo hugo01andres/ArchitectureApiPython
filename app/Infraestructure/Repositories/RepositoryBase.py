@@ -19,8 +19,9 @@ class RepositorioBase:
     def obtener_todos(self):
         return self.model.query.all()
 
-    def actualizar(self):
+    def actualizar(self,entidad):
         try:
+            self.db.session.merge(entidad)
             self.db.session.commit()
         except Exception as e:
             self.db.session.rollback()

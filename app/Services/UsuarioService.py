@@ -17,10 +17,10 @@ class UsuarioService:
     def obtener_usuario_por_id(self, id):
         return self.usuario_repository.obtener_por_id(id)
 
-    def actualizar_usuario(self, id, nombre):
+    def actualizar_usuario(self, id, nuevo_nombre):
         usuario = self.usuario_repository.obtener_por_id(id)
         if usuario is not None:
-            usuario.nombre = nombre
+            usuario.nombre = nuevo_nombre
             self.usuario_repository.actualizar(usuario)
             return usuario
         return None

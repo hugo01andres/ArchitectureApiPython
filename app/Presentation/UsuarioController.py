@@ -76,11 +76,37 @@ def obtener_usuario_por_id(id):
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['PUT'])
 def actualizar_usuario(id):
+    """Actualiza un usuario por su ID.
+
+    Permite modificar la información de un usuario existente.
+
+    ---
+    parameters:
+      - name: id
+        in: path
+        description: ID del usuario a actualizar.
+        required: true
+        type: integer
+      - name: nombre
+        in: body
+        description: Nuevo nombre del usuario.
+        required: true
+        schema:
+          type: object
+          properties:
+            nombre:
+              type: string
+    responses:
+      200:
+        description: Usuario actualizado correctamente.
+      404:
+        description: Usuario no encontrado.
+    """
     data = request.get_json()
     nombre = data.get('nombre')
     usuario_actualizado = usuario_service.actualizar_usuario(id, nombre)
     if usuario_actualizado is not None:
-        return jsonify(usuario_actualizado.__dict__), 200
+        return 'Usuario Actualizado', 200
     return jsonify({'mensaje': 'Usuario no encontrado'}), 404
 
 @usuario_bp.route('/usuarios/<int:id>', methods=['DELETE'])
