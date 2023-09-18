@@ -2,20 +2,30 @@ from app.Infraestructure.Repositories.UsuarioRepository import UsuarioRepository
 
 class UsuarioService:
     def __init__(self):
-        self.usuario_repo = UsuarioRepository()
+        self.usuario_repository = UsuarioRepository()
 
     def crear_usuario(self, nombre):
-        return self.usuario_repo.crear_usuario(nombre)
-
-    def obtener_usuario_por_id(self, id):
-        return self.usuario_repo.obtener_por_id(id)
+        nuevo_usuario = self.usuario_repository.agregar(nombre=nombre)
+        return nuevo_usuario
 
     def obtener_todos_los_usuarios(self):
-        return self.usuario_repo.obtener_todos()
+        return self.usuario_repository.obtener_todos()
 
-    def actualizar_usuario(self):
-        self.usuario_repo.actualizar()
+    def obtener_usuario_por_id(self, id):
+        return self.usuario_repository.obtener_por_id(id)
 
-    def eliminar_usuario(self, usuario):
-        self.usuario_repo.eliminar(usuario)
+    def actualizar_usuario(self, id, nombre):
+        usuario = self.usuario_repository.obtener_por_id(id)
+        if usuario is not None:
+            usuario.nombre = nombre
+            self.usuario_repository.actualizar(usuario)
+            return usuario
+        return None
+
+    def eliminar_usuario(self, id):
+        usuario = self.usuario_repository.obtener_por_id(id)
+        if usuario is not None:
+            self.usuario_repository.eliminar(usuario)
+            return True
+        return False
 
