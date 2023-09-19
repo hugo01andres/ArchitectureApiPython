@@ -38,3 +38,6 @@ class ProyectoService:
             self.proyecto_repository.eliminar(proyecto)
             return True
         return False
+    
+    def obtener_proyectos_con_objetivos(self):
+        return self.proyecto_repository.obtener_proyectos_con_objetivos()

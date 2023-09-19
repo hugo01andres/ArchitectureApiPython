@@ -143,3 +143,36 @@ def eliminar_proyecto(id):
     if eliminado:
         return jsonify({'mensaje': 'Proyecto eliminado correctamente'}), 200
     return jsonify({'mensaje': 'Proyecto no encontrado'}), 404
+
+@proyecto_bp.route('/proyectos/con_objetivos', methods=['GET'])
+def obtener_proyectos_con_objetivos():
+    """Obtiene la lista de proyectos con sus objetivos.
+
+    Obtiene la lista de proyectos y sus objetivos asociados.
+
+    ---
+    responses:
+      200:
+        description: Lista de proyectos con objetivos.
+    """
+    proyectos_con_objetivos = proyecto_service.obtener_proyectos_con_objetivos()
+
+    resultados = {}
+
+    for proyecto, objetivo in proyectos_con_objetivos:
+        if proyecto.id not in resultados:
+            resultados[proyecto.id] = {
+                'id': proyecto.id,
+                'nombre': proyecto.nombre,
+                'objetivos': []
+            }
+
+        resultados[proyecto.id]['objetivos'].append({
+            'id': objetivo.id,
+            'titulo': objetivo.titulo,
+            'descripcion': objetivo.descripcion
+        })
+
+    return jsonify(list(resultados.values())), 200
+
+
