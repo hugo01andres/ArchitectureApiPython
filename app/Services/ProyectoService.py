@@ -63,3 +63,29 @@ class ProyectoService:
             return nuevo_objetivo
 
         return None
+
+    def actualizar_proyecto_y_objetivos(self, proyecto_id, nuevo_nombre_proyecto, nuevos_objetivos):
+        # Obtener el proyecto y sus objetivos asociados
+        proyecto = self.proyecto_repository.obtener_por_id(proyecto_id)
+        objetivos = self.proyecto_repository.obtener_por_proyecto_id(proyecto_id)
+
+        if proyecto is not None:
+            # Actualizar el nombre del proyecto
+            proyecto.nombre = nuevo_nombre_proyecto
+
+            # Actualizar los objetivos
+            for objetivo in objetivos:
+                # Encuentra el nuevo objetivo correspondiente (por ejemplo, por id)
+                nuevo_objetivo = next((obj for obj in nuevos_objetivos if obj['id'] == objetivo.id), None)
+                if nuevo_objetivo is not None:
+                    objetivo.titulo = nuevo_objetivo['titulo']
+                    objetivo.descripcion = nuevo_objetivo['descripcion']
+
+            # Guardar los cambios
+            self.proyecto_repository.actualizar(proyecto)
+            for objetivo in objetivos:
+                self.objetivo_repository.actualizar(objetivo)
+
+            return proyecto
+
+        return None
