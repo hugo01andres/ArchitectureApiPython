@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from app.Infraestructure.db import db
 from app.Presentation.UsuarioController import usuario_bp
+from app.Presentation.ProyectoController import proyecto_bp
 from dotenv import load_dotenv
 import os
 from flasgger import Swagger
@@ -20,5 +21,6 @@ def create_app():
 
     # Registra los blueprints
     app.register_blueprint(usuario_bp)
+    app.register_blueprint(proyecto_bp)
 
     return app
