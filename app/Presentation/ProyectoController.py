@@ -156,23 +156,7 @@ def obtener_proyectos_con_objetivos():
         description: Lista de proyectos con objetivos.
     """
     proyectos_con_objetivos = proyecto_service.obtener_proyectos_con_objetivos()
+    return jsonify(proyectos_con_objetivos), 200
 
-    resultados = {}
-
-    for proyecto, objetivo in proyectos_con_objetivos:
-        if proyecto.id not in resultados:
-            resultados[proyecto.id] = {
-                'id': proyecto.id,
-                'nombre': proyecto.nombre,
-                'objetivos': []
-            }
-
-        resultados[proyecto.id]['objetivos'].append({
-            'id': objetivo.id,
-            'titulo': objetivo.titulo,
-            'descripcion': objetivo.descripcion
-        })
-
-    return jsonify(list(resultados.values())), 200
 
 

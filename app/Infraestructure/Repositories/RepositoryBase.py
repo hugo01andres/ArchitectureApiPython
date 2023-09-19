@@ -34,7 +34,19 @@ class RepositorioBase:
         except Exception as e:
             self.db.session.rollback()
             raise e
-        
+    
+    def obtener_por_filtro(self, filtros):
+        try:
+            query = self.db.session.query(self.model)
+
+            for campo, valor in filtros.items():
+                query = query.filter(getattr(self.model, campo) == valor)
+            return query.all()
+
+        except Exception as e:
+            self.db.session.rollback()
+            raise e
+
     def obtener_todos_ordenados(self, atributo):
         return self.model.query.order_by(getattr(self.model, atributo)).all()
     

@@ -40,4 +40,26 @@ class ProyectoService:
         return False
     
     def obtener_proyectos_con_objetivos(self):
-        return self.proyecto_repository.obtener_proyectos_con_objetivos()
+        proyectos = self.proyecto_repository.obtener_todos()
+        proyectos_con_objetivos = []
+
+        for proyecto in proyectos:
+            objetivos = self.proyecto_repository.obtener_por_proyecto_id(proyecto.id)
+            proyectos_con_objetivos.append({
+                'id': proyecto.id,
+                'nombre': proyecto.nombre,
+                'objetivos': [{'id': objetivo.id, 'titulo': objetivo.titulo, 'descripcion': objetivo.descripcion} for objetivo in objetivos]
+            })
+
+        return proyectos_con_objetivos
+
+
+    def agregar_objetivo_a_proyecto(self, proyecto_id, titulo, descripcion):
+        proyecto = self.proyecto_repository.obtener_por_id(proyecto_id)
+
+        if proyecto is not None:
+            nuevo_objetivo = Objetivo(titulo=titulo, descripcion=descripcion, proyecto=proyecto)
+            self.objetivo_repository.agregar(nuevo_objetivo)
+            return nuevo_objetivo
+
+        return None

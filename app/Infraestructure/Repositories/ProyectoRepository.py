@@ -6,6 +6,6 @@ class ProyectoRepository(RepositorioBase):
     def __init__(self):
         super().__init__(Proyecto)
 
-    def obtener_proyectos_con_objetivos(self):
-        return self.db.session.query(Proyecto, Objetivo).join(Proyecto.objetivos).all()
+    def obtener_por_proyecto_id(self, proyecto_id):
+        return self.db.session.query(Objetivo).filter(Objetivo.proyecto_id == proyecto_id).all()
 
