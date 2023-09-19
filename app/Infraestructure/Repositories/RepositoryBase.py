@@ -34,4 +34,34 @@ class RepositorioBase:
         except Exception as e:
             self.db.session.rollback()
             raise e
+        
+    def obtener_todos_ordenados(self, atributo):
+        return self.model.query.order_by(getattr(self.model, atributo)).all()
+    
+    def obtener_por_pagina(self, pagina, elementos_por_pagina):
+        return self.model.query.paginate(pagina, elementos_por_pagina, False).items
+    
+    def contar_entidades(self):
+        return self.model.query.count()
+    
+    def filtrar_por_rango(self, atributo, valor_minimo, valor_maximo):
+        return self.model.query.filter(getattr(self.model, atributo).between(valor_minimo, valor_maximo)).all()
+    
+    def consulta_personalizada(self, *args, **kwargs):
+        return self.model.query.filter(*args, **kwargs).all()
+    
+    def iniciar_transaccion(self):
+        self.db.session.begin_nested()
+
+    def confirmar_transaccion(self):
+        self.db.session.commit()
+
+    def revertir_transaccion(self):
+        self.db.session.rollback()
+
+
+
+
+
+
 
